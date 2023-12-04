@@ -31,7 +31,7 @@ public class Main {
 
             for (String line : lines) {
 
-                String wordsToMatch = "one|two|three|four|five|six|seven|eight|nine";
+                String wordsToMatch = String.join("|", numbersMap.keySet());
                 String anyNumber = "\\d";
 
                 Pattern pattern = Pattern.compile(wordsToMatch + "|" + anyNumber);
