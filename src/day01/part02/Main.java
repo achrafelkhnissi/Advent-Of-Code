@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
-        String fileName = "src/day02/input.txt";
+        String fileName = "src/day01/part02/input.txt";
         int sum = 0;
 
         HashMap<String, Integer> numbersMap = new HashMap<>(

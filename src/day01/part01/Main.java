@@ -8,7 +8,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        String filePath = "src/day01/input.txt";
+        String filePath = "src/day01/part01/input.txt";
         int sum = 0;
 
         try {
