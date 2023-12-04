@@ -7,51 +7,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Main {
+
+    private static final HashMap<String, Integer> numbersMap = new HashMap<>(
+            Map.of("one", 1,
+                    "two", 2,
+                    "three", 3,
+                    "four", 4,
+                    "five", 5,
+                    "six", 6,
+                    "seven", 7,
+                    "eight", 8,
+                    "nine", 9
+            ));
     public static void main(String[] args) {
         String fileName = "src/day01/part02/input.txt";
         int sum = 0;
-
-        HashMap<String, Integer> numbersMap = new HashMap<>(
-                Map.of("one", 1,
-                        "two", 2,
-                        "three", 3,
-                        "four", 4,
-                        "five", 5,
-                        "six", 6,
-                        "seven", 7,
-                        "eight", 8,
-                        "nine", 9));
 
         try {
             List<String> lines = Files.readAllLines(Path.of(fileName));
 
             for (String line : lines) {
 
-                String wordsToMatch = String.join("|", numbersMap.keySet());
-                String anyNumber = "\\d";
+                List<String> elements = extractElements(line);
 
-                Pattern pattern = Pattern.compile(wordsToMatch + "|" + anyNumber);
-                Matcher matcher = pattern.matcher(line);
-
-                List<String> matchedElements = new ArrayList<>();
-
-                while (matcher.find()) {
-                    matchedElements.add(matcher.group());
-                }
-
-                if (matchedElements.isEmpty()) {
+                if (elements.isEmpty()) {
                     continue;
                 }
 
-                String firstElement = matchedElements.get(0);
-                String lastElement = matchedElements.get(matchedElements.size() - 1);
-
-                int firstNumber = numbersMap.containsKey(firstElement) ? numbersMap.get(firstElement) : Integer.parseInt(firstElement);
-                int lastNumber = numbersMap.containsKey(lastElement) ? numbersMap.get(lastElement) : Integer.parseInt(lastElement);
+                int firstNumber = getNumber(elements.get(0));
+                int lastNumber = getNumber(elements.get(elements.size() - 1));
 
                 sum += Integer.parseInt((firstNumber + "" + lastNumber));
             }
@@ -61,5 +47,36 @@ public class Main {
         }
 
         System.out.println(sum);
+    }
+
+    private static List<String> extractElements(String line) {
+        List<String> elements = new ArrayList<>();
+        List<String> numKeys = new ArrayList<>(numbersMap.keySet());
+
+        for (int i = 0; i < line.length(); i++) {
+            if (Character.isDigit(line.charAt(i))) {
+                elements.add(String.valueOf(line.charAt(i)));
+                continue;
+            }
+
+            for (int j = 3; j <= 5; j++) {
+                if (i + j > line.length()) {
+                    break;
+                }
+
+                String sub = line.substring(i, i + j);
+
+                if (numKeys.contains(sub)) {
+                    elements.add(sub);
+                    i += j - 2; // -2 so that the next iteration starts at the last char of the previous match
+                    break;
+                }
+            }
+        }
+        return elements;
+    }
+
+    private static int getNumber(String element) {
+        return numbersMap.containsKey(element) ? numbersMap.get(element) : Integer.parseInt(element);
     }
 }
