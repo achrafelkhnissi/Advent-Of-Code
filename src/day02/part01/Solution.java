@@ -30,12 +30,6 @@ public class Solution {
         }
 
         System.out.println(sum);
-
-        if (sum == 2617) {
-            System.out.println("Correct!");
-        } else {
-            System.out.println("Incorrect!");
-        }
     }
 
     private static int parseGameId(String line) {
