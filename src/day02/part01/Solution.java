@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Solution {
-    private static final String filePath = "src/day02/input.txt";
+    private static final String filePath = "src/day02/part01/input.txt";
     private static final HashMap<String, Integer> rbgCubesMap = new HashMap<>(
             java.util.Map.of("red", 12,
                     "green", 13,
