@@ -23,24 +23,25 @@ public class Solution {
             for (int i = 0; i < map.length; i++) {
 
                 StringBuilder number = new StringBuilder();
+                boolean isAdjacent = false;
 
                 for (int j = 0; j < map[0].length; j++) {
 
                     char currentChar = map[i][j].charAt(0);
 
-                    if (Character.isDigit(currentChar)) {
+                    if (isNumber(currentChar)) {
                         number.append(currentChar);
-                    } else if (!number.isEmpty()) {
-                        // Check if the number is adjacent to a symbol
-                        boolean isAdjacentToSymbol = checkAdjacentSymbols(map, String.valueOf(number), i, j - number.length());
+                        isAdjacent = isAdjacent || checkAdjacentSymbols(map, i, j);
+                    }
 
-                        if (isAdjacentToSymbol) {
+                    if (!isNumber(currentChar) || j == map[0].length - 1) {
+                        if (!number.isEmpty() && isAdjacent) {
                             sum += Integer.parseInt(number.toString());
                         }
-                        number = new StringBuilder();
+                        number.setLength(0);
+                        isAdjacent = false;
                     }
                 }
-
             }
 
             System.out.println(sum);
@@ -55,22 +56,42 @@ public class Solution {
         return (int) Math.log10(number) + 1;
     }
 
-    private static boolean checkAdjacentSymbols(String[][] map, String number, int i, int j) {
+    private static boolean checkAdjacentSymbols(String[][] map, int i, int j) {
+        final int[][] dirs = {
+                {-1, -1}, {-1, 0}, {-1, 1},
+                {0, -1}, {0, 1},
+                {1, -1}, {1, 0}, {1, 1}
+        };
 
-        for (int k = i - 1; k <= i + 1; k++) {
-            for (int l = j - 1; l <= j + number.length(); l++) {
+        for (int[] dir : dirs) {
+            int newI = i + dir[0];
+            int newJ = j + dir[1];
 
-                // Check if the current element is out of bounds
-                if (k < 0 || k >= map.length || l < 0 || l >= map[0].length) {
-                    continue;
-                }
+            if (isOutOfBounds(newI, newJ, map)) {
+                continue;
+            }
 
-                if (!Character.isDigit(map[k][l].charAt(0)) && !map[k][l].equals(".")) {
-                    return true;
-                }
+            char currentChar = map[newI][newJ].charAt(0);
+
+
+            if (isSymbol(currentChar)) {
+                return true;
             }
         }
 
         return false;
     }
+
+    private static boolean isNumber(char c) {
+        return Character.isDigit(c);
+    }
+
+    private static boolean isSymbol(char c) {
+        return c != '.' && !isNumber(c);
+    }
+
+    private static boolean isOutOfBounds(int i, int j, String[][] map) {
+        return i < 0 || i >= map.length || j < 0 || j >= map[0].length;
+    }
+
 }
