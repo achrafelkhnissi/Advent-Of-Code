@@ -33,7 +33,7 @@ public class Solution {
 
                     if (isNumber(currentChar)) {
                         number.append(currentChar);
-                        String currentSymbol = getAdjacentSymbols(map, i, j);
+                        String currentSymbol = getAdjacentSymbol(map, i, j);
                         isAdjacent = isAdjacent || currentSymbol != null;
 
                         if (currentSymbol != null && !gearMap.containsKey(currentSymbol)) {
@@ -66,7 +66,7 @@ public class Solution {
             // Multiply the numbers that are adjacent to the same *
             for (Map.Entry<String, ArrayList<Integer>> entry : gearMap.entrySet()) {
                 ArrayList<Integer> gear = entry.getValue();
-                sum +=  getGreatRatio(gear);
+                sum +=  getGearRatio(gear);
             }
 
             System.out.println(sum);
@@ -77,7 +77,7 @@ public class Solution {
 
     }
 
-    private static String getAdjacentSymbols(String[][] map, int i, int j) {
+    private static String getAdjacentSymbol(String[][] map, int i, int j) {
         final int[][] dirs = {
                 {-1, -1}, {-1, 0}, {-1, 1},
                 {0, -1}, {0, 1},
@@ -123,7 +123,7 @@ public class Solution {
         return key.substring(1, key.length() - 1).split(", ");
     }
 
-    private static int getGreatRatio(ArrayList<Integer> gear) {
+    private static int getGearRatio(ArrayList<Integer> gear) {
 
         if (gear.size() == 1) {
             return 0;
