@@ -35,7 +35,7 @@ public class Solution {
                     }
 
                     if (!isNumber(currentChar) || j == map[0].length - 1) {
-                        if (number.length() == 0 && isAdjacent) {
+                        if (number.isEmpty() && isAdjacent) {
                             sum += Integer.parseInt(number.toString());
                         }
                         number.setLength(0);

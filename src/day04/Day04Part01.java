@@ -31,7 +31,7 @@ public class Day04Part01 {
 
                 for (String number : myNumbersList) {
 
-                    if (number.length() == 0) {
+                    if (number.isEmpty()) {
                         continue;
                     }
 

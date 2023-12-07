@@ -78,7 +78,7 @@ public class Day04Part02 {
         // Check if winning numbers are in my numbers
         for (String number : myNumbersList) {
 
-            if (number.length() == 0) {
+            if (number.isEmpty()) {
                 continue;
             }
 
