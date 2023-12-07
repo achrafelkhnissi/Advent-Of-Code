@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,7 +20,7 @@ public class Main {
                         .filter(Character::isDigit)
                         .map(Character::getNumericValue)
                         .boxed()
-                        .toList();
+                        .collect(Collectors.toList());
 
                 if (numbers.isEmpty()) {
                     continue;
